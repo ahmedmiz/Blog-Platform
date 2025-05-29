@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog Platform
+
+A modern blog platform built with Next.js, TypeScript, and Tailwind CSS. This application allows users to view, create, edit, and delete blog posts, as well as view author profiles and comments.
+
+## About this project This project was developed as part of a task assessment
+
+## Features
+
+- Responsive design that works on desktop and mobile
+- View, create, edit, and delete blog posts
+- Author profiles with detailed information
+- Comment system for blog posts
+- Search functionality for posts
+- Pagination for post lists
+- Server-side rendering with Next.js
+- UI with Tailwind CSS
+- Real-time updates with SWR
+
+## Tech Stack
+
+- **Framework**: Next.js 13+ with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Data Fetching**: SWR + Axios
+- **State Management**: React Hooks
+- **UI Components**: Custom components
+- **Notifications**: React Hot Toast
+- **API**: JSONPlaceholder
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ahmedmiz/Blog-Platform.git
+cd blog-platform
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) with your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                   # Next.js app router pages
+│   ├── authors/          # Author-related pages
+│   ├── posts/            # Post-related pages
+│   └── layout.tsx        # Root layout
+├── components/           # React components
+│   ├── AuthorCard.tsx    # Author profile card
+│   ├── CommentList.tsx   # Post comments
+│   ├── PostCard.tsx      # Individual post card
+│   ├── PostList.tsx      # List of posts
+│   └── SearchBar.tsx     # Search functionality
+├── hooks/                # Custom React hooks
+│   └── usePosts.ts       # Posts data fetching
+├── lib/                  # Utility functions
+│   └── api.ts           # API client
+└── types/                # TypeScript types
+    └── index.ts         # Shared types
+```
 
-## Learn More
+## Key Features Implementation
 
-To learn more about Next.js, take a look at the following resources:
+### Posts Management
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- View all posts with pagination
+- Search posts by title or content
+- Create, edit, and delete posts
+- View individual post details
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Author Features
 
-## Deploy on Vercel
+- View author profiles
+- See author's posts
+- Contact information display
+- Company details
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### UI/UX Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Loading states
+- Error handling
+- Toast notifications
+- Responsive design
+- Pagination controls
+
+## API Integration
+
+The project uses JSONPlaceholder API for demonstration purposes. Key endpoints:
+
+- `/posts` - Get all posts
+- `/posts/:id` - Get single post
+- `/users/:id` - Get single user
+- `/posts/:id/comments` - Get post comments
+
+## Contact Information
+
+For any questions or feedback about this project, please contact:
+
+- **Developer**: Ahmed Saad
+- **Email**: <mizoahmed017@gmail.com>
+- **Phone**: +201114149305
