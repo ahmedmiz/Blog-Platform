@@ -50,6 +50,22 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser
 
+## Docker Setup
+
+1. Build the Docker image:
+
+```bash
+docker build -t blog-platform .
+```
+
+2. Run the container:
+
+```bash
+docker run -p 3000:3000 blog-platform
+```
+
+3. Access the application at [http://localhost:3000](http://localhost:3000)
+
 ## Project Structure
 
 ```

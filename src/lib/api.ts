@@ -28,7 +28,10 @@ export const api = {
             const response = await axios.get(`${API_BASE}/posts/${id}`);
             return response.data;
         } catch (error) {
-            toast.error('Failed to fetch post');
+            // Remove toast call during SSG
+            if (typeof window !== 'undefined') {
+                toast.error('Failed to fetch post');
+            }
             throw error;
         }
     },

@@ -26,11 +26,11 @@ export default function PostList() {
 
     const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
-    const handleDelete = (deletedId: number) => {
+    const handleDelete = (_deletedId: number) => {
         refetch();
     };
 
-    const handleUpdate = (updatedId: number, newTitle: string) => {
+    const handleUpdate = (_updatedId: number, _newTitle: string) => {
         refetch();
     };
 

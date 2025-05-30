@@ -3,13 +3,16 @@ import AuthorCard from '@/components/AuthorCard';
 import PostCard from '@/components/PostCard';
 import Link from 'next/link';
 import { User, Post } from '@/types';
+import { toast } from 'react-hot-toast'
 
 interface AuthorPageProps {
-    params: { id: string };
+    params: Promise<{ id: string }>;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function AuthorPage({ params }: AuthorPageProps) {
-    const userId = parseInt(params.id);
+    const { id } = await params;
+    const userId = Number(id);
 
     try {
         const [author, allPosts]: [User, Post[]] = await Promise.all([
@@ -48,7 +51,11 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 </div>
             </div>
         );
-    } catch (error) {
+    } catch (_error) {
+        console.log('Error fetching author data:', _error);
+        if (typeof window !== 'undefined') {
+            toast.error('Failed to load post');
+        }
         return (
             <div className="text-center py-12">
                 <h1 className="text-2xl font-bold text-red-600 mb-4">Author Not Found</h1>

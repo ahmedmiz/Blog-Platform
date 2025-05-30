@@ -2,13 +2,17 @@ import { api } from '@/lib/api';
 import CommentList from '@/components/CommentList';
 import Link from 'next/link';
 import { Post, Comment, User } from '@/types';
+import { toast } from 'react-hot-toast'
+
 
 interface PostPageProps {
-    params: { id: string };
+    params: Promise<{ id: string }>;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = Number(id);
 
     try {
         const [post, comments, author]: [Post, Comment[], User] = await Promise.all([
@@ -46,6 +50,11 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
         );
     } catch (error) {
+        console.error('Error fetching post data:', error);
+        // Only show toast on client side
+        if (typeof window !== 'undefined') {
+            toast.error('Failed to load post');
+        }
         return (
             <div className="text-center py-12">
                 <h1 className="text-2xl font-bold text-red-600 mb-4">Post Not Found</h1>
