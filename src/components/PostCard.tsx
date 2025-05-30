@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Post } from '@/types';
 import { api } from '@/lib/api';
-
+import { usePathname } from 'next/navigation';
 interface PostCardProps {
     post: Post;
     onDelete?: (id: number) => void;
@@ -15,6 +15,9 @@ export default function PostCard({ post, onDelete, onUpdate }: PostCardProps) {
     const [editTitle, setEditTitle] = useState(post.title);
     const [isLoading, setIsLoading] = useState(false);
 
+
+    const pathname = usePathname();
+    const [showAuthor] = useState(pathname?.includes('/authors/'));
     const handleUpdate = async () => {
         if (!editTitle.trim()) return;
 
@@ -54,14 +57,14 @@ export default function PostCard({ post, onDelete, onUpdate }: PostCardProps) {
                         disabled={isLoading}
                     />
                     <div className="mt-2 space-x-2">
-                        <button
+                        <button aria-label="Update"
                             onClick={handleUpdate}
                             disabled={isLoading}
                             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
                         >
                             {isLoading ? 'Saving...' : 'Save'}
                         </button>
-                        <button
+                        <button aria-label="Edit"
                             onClick={() => setIsEditing(false)}
                             className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         >
@@ -70,29 +73,39 @@ export default function PostCard({ post, onDelete, onUpdate }: PostCardProps) {
                     </div>
                 </div>
             ) : (
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                     <h2 className="text-xl font-semibold mb-2 text-gray-800">
                         <Link href={`/posts/${post.id}`} className="hover:text-blue-600 transition-colors">
                             {post.title}
+
                         </Link>
                     </h2>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{post.body}</p>
+                    <div style={{ display: 'flex', alignItems: "flex-end" }} className='mb-4'>
+                        <p className="text-gray-600 line-clamp-3 text-sm">{(post.body.slice(0, 130).concat('...'))}</p>
+                        {post.body.length > 130 && (
+                            <Link href={`/posts/${post.id}`} className="text-blue-600 hover:text-blue-800 text-sm " style={{ textWrap: 'nowrap' }}>
+                                Read more
+                            </Link>
+                        )}
+                    </div>
+
                     <div className="flex justify-between items-center">
-                        <Link
+                        {!showAuthor && < Link
                             href={`/authors/${post.userId}`}
                             className="text-blue-600 hover:text-blue-800 text-sm"
                         >
 
                             Author : {post.userName || post.userId}
-                        </Link>
+                        </Link>}
                         <div className="space-x-2">
-                            <button
+                            <button aria-label="Edit"
                                 onClick={() => setIsEditing(true)}
                                 className="px-3 py-1 text-sm bg-yellow-500 text-white rounded hover:bg-yellow-600"
                             >
                                 Edit
                             </button>
                             <button
+                                aria-label="Delete"
                                 onClick={handleDelete}
                                 disabled={isLoading}
                                 className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
@@ -102,7 +115,8 @@ export default function PostCard({ post, onDelete, onUpdate }: PostCardProps) {
                         </div>
                     </div>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

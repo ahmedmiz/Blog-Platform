@@ -4,6 +4,7 @@ import PostCard from './PostCard';
 import SearchBar from './SearchBar';
 import LoadingSpinner from './LoadingSpinner';
 import { usePosts } from '@/hooks/usePosts';
+import { Pagination } from 'antd';
 
 const POSTS_PER_PAGE = 6;
 
@@ -24,7 +25,6 @@ export default function PostList() {
         return filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
     }, [filteredPosts, currentPage]);
 
-    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
     const handleDelete = (_deletedId: number) => {
         refetch();
@@ -53,22 +53,11 @@ export default function PostList() {
                 ))}
             </div>
 
-            {totalPages > 1 && (
-                <div className="mt-8 flex justify-center space-x-2">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                        <button
-                            key={page}
-                            onClick={() => setCurrentPage(page)}
-                            className={`px-4 py-2 rounded ${currentPage === page
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                        >
-                            {page}
-                        </button>
-                    ))}
-                </div>
-            )}
+
+            <div className="mt-8 flex justify-center space-x-2">
+                <Pagination showSizeChanger={false} defaultCurrent={1} total={posts.length} current={currentPage} onChange={(e) => setCurrentPage(e)} defaultPageSize={POSTS_PER_PAGE} />
+
+            </div>
         </div>
     );
 }

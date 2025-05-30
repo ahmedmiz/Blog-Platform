@@ -11,6 +11,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "antd": "^5.25.3",
     "axios": "^1.9.0",
     "next": "15.3.2",
     "react": "^19.0.0",
